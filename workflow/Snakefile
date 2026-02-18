@@ -10,7 +10,7 @@ rule mafft:
     output:
         'results/mafft/{marker}_aligned.fas'
     log:
-        'results/mafft/{marker}.log'
+        'results/logs/mafft/{marker}.log'
     shell:
         'mafft {input} > {output} 2> {log}'
 
@@ -20,7 +20,7 @@ rule trimal:
     output:
         'results/trimal/{marker}_aligned_trimmed.fas'
     log:
-        'results/trimal/{marker}.log'
+        'results/logs/trimal/{marker}.log'
     shell:
         'trimal -in {input} -out {output} &> {log}'
 
@@ -30,7 +30,7 @@ rule raxml_ng:
     output:
         'results/raxml_ng/{marker}.raxml.support'
     log:
-        'results/raxml_ng/{marker}.log'
+        'results/logs/raxml_ng/{marker}.log'
     params:
         prefix='results/raxml_ng/{marker}',
         model=config['raxml_ng']['model'],
