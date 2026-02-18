@@ -3,5 +3,6 @@ markers:
   - ITS
 
 raxml_ng:
+  threads: 4
   model: GTR+G
   bs_trees: 100

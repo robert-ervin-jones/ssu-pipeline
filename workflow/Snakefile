@@ -31,9 +31,11 @@ rule raxml_ng:
         'results/raxml_ng/{marker}.raxml.support'
     log:
         'results/logs/raxml_ng/{marker}.log'
+    threads:
+        config['raxml_ng']['threads']
     params:
         prefix='results/raxml_ng/{marker}',
         model=config['raxml_ng']['model'],
         bs_trees=config['raxml_ng']['bs_trees']
     shell:
-        'raxml-ng --all --msa {input} --model {params.model} --bs-trees {params.bs_trees} --prefix {params.prefix} &> {log}'
+        'raxml-ng --all --msa {input} --threads {threads} --model {params.model} --bs-trees {params.bs_trees} --prefix {params.prefix} &> {log}'
