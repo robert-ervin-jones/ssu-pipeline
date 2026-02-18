@@ -1,0 +1,7 @@
+markers:
+  - SSU
+  - ITS
+
+raxml_ng:
+  model: GTR+G
+  bs_trees: 100

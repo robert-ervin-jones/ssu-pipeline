@@ -1,0 +1,39 @@
+configfile: 'config/config.yaml'
+
+rule all:
+    input:
+        expand('results/raxml_ng/{marker}.raxml.support', marker=config['markers'])
+
+rule mafft:
+    input:
+        'data/{marker}.fas'
+    output:
+        'results/mafft/{marker}_aligned.fas'
+    log:
+        'results/mafft/{marker}.log'
+    shell:
+        'mafft {input} > {output} 2> {log}'
+
+rule trimal:
+    input:
+        'results/mafft/{marker}_aligned.fas'
+    output:
+        'results/trimal/{marker}_aligned_trimmed.fas'
+    log:
+        'results/trimal/{marker}.log'
+    shell:
+        'trimal -in {input} -out {output} &> {log}'
+
+rule raxml_ng:
+    input:
+        'results/trimal/{marker}_aligned_trimmed.fas'
+    output:
+        'results/raxml_ng/{marker}.raxml.support'
+    log:
+        'results/raxml_ng/{marker}.log'
+    params:
+        prefix='results/raxml_ng/{marker}',
+        model=config['raxml_ng']['model'],
+        bs_trees=config['raxml_ng']['bs_trees']
+    shell:
+        'raxml-ng --all --msa {input} --model {params.model} --bs-trees {params.bs_trees} --prefix {params.prefix} &> {log}'
