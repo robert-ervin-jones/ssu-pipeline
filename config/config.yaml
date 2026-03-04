@@ -6,3 +6,4 @@ raxml_ng:
   threads: 4
   model: GTR+G
   bs_trees: 100
+  mem_mb: 16000

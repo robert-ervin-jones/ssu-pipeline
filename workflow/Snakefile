@@ -33,6 +33,8 @@ rule raxml_ng:
         'results/logs/raxml_ng/{marker}.log'
     threads:
         config['raxml_ng']['threads']
+    resources:
+        mem_mb=config['raxml_ng']['mem_mb']
     params:
         prefix='results/raxml_ng/{marker}',
         model=config['raxml_ng']['model'],
